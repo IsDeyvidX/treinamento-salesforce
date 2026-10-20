@@ -1,0 +1,20 @@
+<template>
+    <lightning-quick-action-panel header="Criar Oportunidade">
+        <template lwc:if={isLoading}>
+            <lightning-spinner alternative-text="Salvando" size="small"></lightning-spinner>
+        </template>
+        <lightning-input label="Nome da oportunidade" data-field="name" value={form.name} required onchange={handleChange}></lightning-input>
+        <lightning-combobox label="Produto" data-field="produto" value={form.produto} options={produtoOptions} required onchange={handleChange}></lightning-combobox>
+        <lightning-input type="number" label="Valor estimado" data-field="valorEstimado" value={form.valorEstimado} step="0.01" min="0.01" required onchange={handleChange}></lightning-input>
+        <lightning-input type="number" label="Quantidade" data-field="quantidade" value={form.quantidade} step="1" min="1" required onchange={handleChange}></lightning-input>
+        <lightning-input type="date" label="Data de fechamento" data-field="closeDate" value={form.closeDate} min={today} required onchange={handleChange}></lightning-input>
+        <lightning-textarea label="Observação" data-field="observacao" value={form.observacao} onchange={handleChange}></lightning-textarea>
+        <template lwc:if={errorMessage}>
+            <p class="slds-text-color_error slds-var-m-top_small">{errorMessage}</p>
+        </template>
+        <div slot="footer">
+            <lightning-button label="Cancelar" onclick={handleCancel} class="slds-var-m-right_x-small"></lightning-button>
+            <lightning-button variant="brand" label="Criar" onclick={handleSave} disabled={isLoading}></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

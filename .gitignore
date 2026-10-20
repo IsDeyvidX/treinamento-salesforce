@@ -1,0 +1,15 @@
+.sf/
+.sfdx/
+
+# Local environment files
+.env
+.env.*
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
+
+# Dependency/build artifacts
+node_modules/
+coverage/

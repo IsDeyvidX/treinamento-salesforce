@@ -1,0 +1,15 @@
+<template>
+    <lightning-quick-action-panel header="Converter em Cliente">
+        <template lwc:if={isLoading}>
+            <lightning-spinner alternative-text="Convertendo" size="small"></lightning-spinner>
+        </template>
+        <p>Será criada uma Account e um Contact a partir deste Lead (sem Opportunity).</p>
+        <template lwc:if={errorMessage}>
+            <p class="slds-text-color_error slds-var-m-top_small">{errorMessage}</p>
+        </template>
+        <div slot="footer">
+            <lightning-button label="Cancelar" onclick={handleCancel} class="slds-var-m-right_x-small"></lightning-button>
+            <lightning-button variant="brand" label="Converter" onclick={handleConvert} disabled={isLoading}></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

@@ -1,0 +1,57 @@
+<template>
+    <lightning-card title="Cadastro de Potencial Cliente" icon-name="standard:lead">
+        <div class="slds-var-p-around_medium">
+            <template lwc:if={isLoading}>
+                <lightning-spinner alternative-text="Carregando" size="medium"></lightning-spinner>
+            </template>
+
+            <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-input label="Nome" data-field="firstName" value={form.firstName} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-input label="Sobrenome" data-field="lastName" value={form.lastName} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-input type="email" label="E-mail" data-field="email" value={form.email} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-input type="tel" label="Telefone" data-field="telefone" value={form.telefone} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-combobox label="Tipo de pessoa" data-field="tipoPessoa" value={form.tipoPessoa} options={tipoOptions} required onchange={handleChange}></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-input label={documentoLabel} data-field="documento" value={form.documento} maxlength={documentoMaxLength} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="CEP" data-field="cep" value={form.cep} maxlength="9" required onchange={handleChange} onblur={handleCepBlur}></lightning-input>
+                    <template lwc:if={cepMessage}>
+                        <p class="slds-text-color_error slds-text-body_small">{cepMessage}</p>
+                    </template>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                    <lightning-input label="Logradouro" data-field="logradouro" value={form.logradouro} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Número" data-field="numero" value={form.numero} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Bairro" data-field="bairro" value={form.bairro} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="Complemento" data-field="complemento" value={form.complemento} onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                    <lightning-input label="Cidade" data-field="cidade" value={form.cidade} required onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input label="UF" data-field="uf" value={form.uf} maxlength="2" required onchange={handleChange}></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div slot="footer">
+            <lightning-button variant="brand" label="Salvar Lead" onclick={handleSave} disabled={isLoading}></lightning-button>
+        </div>
+    </lightning-card>
+</template>
