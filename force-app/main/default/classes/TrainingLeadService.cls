@@ -43,7 +43,7 @@ public with sharing class TrainingLeadService {
             Status = STATUS_NEW,
             EnderecoValidado__c = isAddressConfirmed(cep, r)
         );
-        setState(l, r.uf);
+        TrainingAddressSupport.applyLeadState(l, r.uf);
 
         try {
             insert l;
@@ -52,16 +52,6 @@ public with sharing class TrainingLeadService {
             throw new TrainingException('Não foi possível salvar o Lead. Verifique os dados informados (ex.: e-mail).');
         }
         return l.Id;
-    }
-
-    private static void setState(Lead l, String state) {
-        String stateCode = state.trim().toUpperCase();
-        if (!Lead.CountryCode.getDescribe().getPicklistValues().isEmpty()) {
-            l.put('CountryCode', 'BR');
-            l.put('StateCode', stateCode);
-        } else {
-            l.State = stateCode;
-        }
     }
 
     private static void validateRequired(TrainingLeadRequest r) {

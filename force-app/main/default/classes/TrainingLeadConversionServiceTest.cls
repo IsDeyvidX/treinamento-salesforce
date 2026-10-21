@@ -6,12 +6,7 @@ private class TrainingLeadConversionServiceTest {
             TipoDocumento__c = 'CPF', Documento__c = '52998224725', EnderecoValidado__c = true,
             Street = 'Praça da Sé', City = 'São Paulo', PostalCode = '01001000',
             Bairro__c = 'Sé', NumeroEndereco__c = '100', Complemento__c = 'Sala 1');
-        if (!Lead.CountryCode.getDescribe().getPicklistValues().isEmpty()) {
-            l.put('CountryCode', 'BR');
-            l.put('StateCode', 'SP');
-        } else {
-            l.State = 'SP';
-        }
+        TrainingAddressSupport.applyLeadState(l, 'SP');
         insert l;
         return l;
     }

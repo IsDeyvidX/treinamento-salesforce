@@ -26,13 +26,12 @@ public with sharing class TrainingLeadConversionService {
     }
 
     private static Lead loadLead(Id leadId) {
-        List<Lead> leads = [
-            SELECT Id, IsConverted, Status, Email, Phone, Street, City, State, StateCode,
-                   Country, CountryCode, PostalCode,
-                   TipoDocumento__c, Documento__c, NumeroEndereco__c, Bairro__c, Complemento__c,
-                   EnderecoValidado__c, Score__c, AptoConversao__c
-            FROM Lead WHERE Id = :leadId LIMIT 1
-        ];
+        String soql = 'SELECT Id, IsConverted, Status, Email, Phone, Street, City, State, PostalCode, '
+            + 'TipoDocumento__c, Documento__c, NumeroEndereco__c, Bairro__c, Complemento__c, '
+            + 'EnderecoValidado__c, Score__c, AptoConversao__c'
+            + TrainingAddressSupport.extraLeadFields()
+            + ' FROM Lead WHERE Id = :leadId LIMIT 1';
+        List<Lead> leads = Database.query(soql);
         if (leads.isEmpty()) throw new TrainingException('Lead não encontrado.');
         return leads[0];
     }
@@ -72,12 +71,7 @@ public with sharing class TrainingLeadConversionService {
             BillingStreet = l.Street,
             BillingCity = l.City
         );
-        if (!Account.BillingCountryCode.getDescribe().getPicklistValues().isEmpty()) {
-            a.put('BillingCountryCode', l.get('CountryCode'));
-            a.put('BillingStateCode', l.get('StateCode'));
-        } else {
-            a.BillingState = l.State;
-        }
+        TrainingAddressSupport.applyBillingState(a, l);
         update a;
     }
 }

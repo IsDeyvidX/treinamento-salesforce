@@ -24,10 +24,7 @@ public with sharing class TrainingOpportunityService {
             // Se o Order falhar, a Opportunity criada neste fluxo é desfeita.
             Database.rollback(sp);
             System.debug(LoggingLevel.ERROR, e.getMessage() + '\n' + e.getStackTraceString());
-            String reason = e instanceof DmlException ? ((DmlException) e).getDmlMessage(0) : e.getMessage();
-            throw new TrainingException(
-                'Não foi possível criar a oportunidade e o pedido. Nenhum dado foi salvo. Detalhe: ' + reason
-            );
+            throw new TrainingException('Não foi possível criar a oportunidade e o pedido. Nenhum dado foi salvo.');
         }
     }
 

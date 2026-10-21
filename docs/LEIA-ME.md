@@ -8,7 +8,7 @@ Fluxo: Formulário LWC → validação CPF/CNPJ → ViaCEP → Lead → qualific
 3. Na org, em **Setup**, faça manualmente (o deploy não cobre isso):
    - **Lead Status** (`Novo`, `Qualificado` e `Convertido`, este último marcado como *Converted*) e **Lead Source** (`Treinamento LWC`) são entregues pelos metadados em `force-app`; confira esses valores se já existirem configurações personalizadas na org.
    - **Order Settings**: ative *Enable Orders* (e *Enable Reduction Orders* pode ficar desligado).
-   - **State and Country/Territory Picklists**: deixe DESLIGADO (o endereço usa texto livre, ex.: UF = SP).
+   - **State and Country/Territory Picklists**: pode ficar ligado ou desligado, pois o código detecta via `TrainingAddressSupport`; se ligado, confira se Brasil e os estados estão ativos.
    - **Named Credential `ViaCEP`**: Setup > Named Credentials. Nome/Label: `ViaCEP`, URL: `https://viacep.com.br/ws`, sem autenticação.
      - Interface nova: crie primeiro uma *External Credential* com protocolo **No Authentication**, depois a Named Credential apontando para ela.
      - Se aparecer "New Legacy", pode usar também (Authentication Protocol = No Authentication).

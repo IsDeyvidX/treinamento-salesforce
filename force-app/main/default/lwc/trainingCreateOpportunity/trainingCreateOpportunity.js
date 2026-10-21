@@ -44,20 +44,30 @@ export default class TrainingCreateOpportunity extends NavigationMixin(Lightning
         return ok;
     }
 
+    // Lê os valores atuais direto dos campos, evitando depender só do estado do componente.
+    readFields() {
+        const v = { ...this.form };
+        this.template.querySelectorAll('lightning-input, lightning-combobox, lightning-textarea').forEach((el) => {
+            if (el.dataset.field) v[el.dataset.field] = el.value;
+        });
+        return v;
+    }
+
     async handleSave() {
         this.errorMessage = '';
         if (!this.validate()) return;
         this.isLoading = true;
         try {
+            const v = this.readFields();
             const oppId = await createOpportunity({
                 requestJson: JSON.stringify({
                     accountId: this.recordId,
-                    name: this.form.name,
-                    produto: this.form.produto,
-                    valorEstimado: Number(this.form.valorEstimado),
-                    quantidade: parseInt(this.form.quantidade, 10),
-                    closeDate: this.form.closeDate,
-                    observacao: this.form.observacao
+                    name: v.name,
+                    produto: v.produto,
+                    valorEstimado: Number(v.valorEstimado),
+                    quantidade: parseInt(v.quantidade, 10),
+                    closeDate: v.closeDate,
+                    observacao: v.observacao
                 })
             });
             const url = await this[NavigationMixin.GenerateUrl]({
