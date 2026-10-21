@@ -10,4 +10,13 @@ public with sharing class TrainingOpportunityController {
             throw TrainingErrors.wrap(e);
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<TrainingProductOption> getProductOptions() {
+        try {
+            return TrainingProductService.listAvailableProducts(null);
+        } catch (Exception e) {
+            throw TrainingErrors.wrap(e);
+        }
+    }
 }
