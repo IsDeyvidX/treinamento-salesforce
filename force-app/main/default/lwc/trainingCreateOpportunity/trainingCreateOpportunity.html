@@ -4,13 +4,46 @@
             <lightning-spinner alternative-text="Salvando" size="small"></lightning-spinner>
         </template>
         <lightning-input label="Nome da oportunidade" data-field="name" value={form.name} required onchange={handleChange}></lightning-input>
-        <lightning-combobox label="Produto" data-field="produto" value={form.produto} options={produtoOptions} required onchange={handleChange}></lightning-combobox>
-        <lightning-input type="number" label="Valor estimado" data-field="valorEstimado" value={form.valorEstimado} step="0.01" min="0.01" required onchange={handleChange}></lightning-input>
-        <lightning-input type="number" label="Quantidade" data-field="quantidade" value={form.quantidade} step="1" min="1" required onchange={handleChange}></lightning-input>
         <lightning-input type="date" label="Data de fechamento" data-field="closeDate" value={form.closeDate} min={today} required onchange={handleChange}></lightning-input>
+
+        <fieldset class="slds-m-top_small">
+            <legend class="slds-text-title_caps slds-m-bottom_x-small">Produtos</legend>
+            <template for:each={rowViews} for:item="row">
+                <div key={row.key} class="slds-grid slds-grid_vertical-align-end slds-gutters_x-small slds-m-bottom_x-small">
+                    <div class="slds-col slds-size_5-of-12">
+                        <lightning-combobox label={row.productLabel} placeholder="Selecione um produto" data-key={row.key} data-row-field="pricebookEntryId" value={row.pricebookEntryId} options={row.options} required onchange={handleRowChange}></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <lightning-input type="number" label={row.quantityLabel} data-key={row.key} data-row-field="quantidade" value={row.quantidade} step="1" min="1" required onchange={handleRowChange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <span class="slds-form-element__label">Preço unitário</span>
+                        <div class="slds-form-element__static">
+                            <lightning-formatted-number value={row.unitPrice} format-style="currency" currency-code={currencyCode}></lightning-formatted-number>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <span class="slds-form-element__label">Subtotal</span>
+                        <div class="slds-form-element__static">
+                            <lightning-formatted-number value={row.subtotal} format-style="currency" currency-code={currencyCode}></lightning-formatted-number>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning-button-icon icon-name="utility:delete" alternative-text={row.removeLabel} title={row.removeLabel} data-key={row.key} disabled={isRemoveDisabled} onclick={handleRemoveRow}></lightning-button-icon>
+                    </div>
+                </div>
+            </template>
+            <lightning-button label="Adicionar produto" icon-name="utility:add" onclick={handleAddRow} disabled={isAddDisabled}></lightning-button>
+        </fieldset>
+
+        <div class="slds-text-heading_small slds-m-top_medium" aria-live="polite">
+            Total geral:
+            <lightning-formatted-number value={total} format-style="currency" currency-code={currencyCode}></lightning-formatted-number>
+        </div>
+
         <lightning-textarea label="Observação" data-field="observacao" value={form.observacao} onchange={handleChange}></lightning-textarea>
         <template lwc:if={errorMessage}>
-            <p class="slds-text-color_error slds-var-m-top_small">{errorMessage}</p>
+            <p class="slds-text-color_error slds-var-m-top_small" role="alert">{errorMessage}</p>
         </template>
         <div slot="footer">
             <lightning-button label="Cancelar" onclick={handleCancel} class="slds-var-m-right_x-small"></lightning-button>

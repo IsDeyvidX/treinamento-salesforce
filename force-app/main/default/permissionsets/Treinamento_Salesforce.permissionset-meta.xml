@@ -47,6 +47,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TrainingOpportunityItemRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TrainingOpportunityRequest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -56,6 +60,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TrainingOrderService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TrainingProductOption</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TrainingProductService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
